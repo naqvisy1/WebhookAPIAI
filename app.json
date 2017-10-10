@@ -1,6 +1,6 @@
 {
-  "name": "Webhook-echo-sample",
-  "description": "Webhook echo sample",
-  "repository": "https://github.com/SunilSyal/Webhook-and-API.AI-Samples.git",
+  "name": "msufcuchatbot",
+  "description": "MSUFCUChatbot Webhook",
+  "repository": "https://github.com/naqvisy1/WebhookAPIAI.git",
   "keywords": ["api.ai", "natural language"]
 }
