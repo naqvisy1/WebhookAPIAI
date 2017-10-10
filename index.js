@@ -13,8 +13,14 @@ app.use(bodyParser.json());
 
 app.post('/echo', function(req, res) {
     
-    var accountId = "1234";
-    var response = "Your balance is 1000";
+    if(req.body.result.parameters.bankAccountNumber === 1234)
+    {
+        var response = "Your balance is 1000";
+    }
+    else if(req.body.result.parameters.bankAccountNumber === 9999)
+    {
+         var response = "Your balance is 1000";
+    }
     //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     return res.json({
         speech: response,
