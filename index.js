@@ -19,7 +19,7 @@ restService.post('/echo', function(req, res) {
     return res.json({
         speech: response,
         displayText: response,
-        source: 'webhook-echo-sample'
+        source: 'msufcuchatbot'
     });
 });
 
