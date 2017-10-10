@@ -19,7 +19,7 @@ app.post('/echo', function(req, res) {
     }
     else if(req.body.result.parameters.bankAccountNumber === 9999)
     {
-         var response = "Your balance is 1000";
+        var response = "Your balance is 3000";
     }
     //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     return res.json({
