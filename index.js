@@ -23,7 +23,7 @@ app.post('/echo', function(req, res) {
     }
     else
     {
-        var response = "Sorry, but that account does not exist at this time";
+        var response = "Sorry, but that account does not exist at this time" + req.body.result.parameters.bankAccountNumber;
     }
     //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
     return res.json({
