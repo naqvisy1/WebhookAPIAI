@@ -17,11 +17,11 @@ app.post('/echo', function(req, res) {
     
     if(accountNumber === 532579)
     {
-        var response = "Your balance is $9,131,993.00";
+        var response = "Your balance is $3,498.63";
     }
     else if(accountNumber === 473823)
     {
-        var response = "Your balance is $5,102,017.00";
+        var response = "Your balance is $1,856.99";
     }
     else
     {
