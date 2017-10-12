@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const http = require('http');
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -12,27 +14,48 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/echo', function(req, res) {
-    
+
     var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
-    
-    if(accountNumber === 532579)
-    {
-        var response = "Your balance is $3,498.63";
-    }
-    else if(accountNumber === 473823)
-    {
-        var response = "Your balance is $1,856.99";
-    }
-    else
-    {
-        var response = "Sorry, but that account does not exist at this time";
-    }
-    //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
-    return res.json({
-        speech: response,
-        displayText: response,
-        source: 'msufcuchatbot'
+    var response = "";
+    http.get("http://api.msufcuchatbot.me/getBalance/"+accountNumber+"", (resp) => {
+      let data = '';
+
+      // A chunk of data has been recieved.
+      resp.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      // The whole response has been received. Print out the result.
+      resp.on('end', () => {
+        console.log(JSON.parse(data));
+        response = JSON.parse(data);
+        res.send(response);
+        return;
+      });
+
+    }).on("error", (err) => {
+      console.log("Error: " + err.message);
     });
+    console.log("1", response);
+
+    // if(accountNumber === 532579)
+    // {
+    //     var response = "Your balance is $3,498.63";
+    // }
+    // else if(accountNumber === 473823)
+    // {
+    //     var response = "Your balance is $1,856.99";
+    // }
+    // else
+    // {
+    //     var response = "Sorry, but that account does not exist at this time";
+    // }
+    //var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
+    // return res.json({
+    //     speech: response,
+    //     displayText: response,
+    //     source: 'msufcuchatbot'
+    // });
 });
 
 app.listen((process.env.PORT || 8000), function() {
