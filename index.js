@@ -32,7 +32,7 @@ request.post(
         console.log("yo");
         return res.json({
             speech: speech2,
-            displayText: response.balance,
+            displayText: response.body.balance,
             source: 'msufcuchatbot'
         });
     }
