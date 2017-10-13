@@ -31,8 +31,8 @@ request.post(
         }
         console.log("yo");
         return res.json({
-            speech: speech2,
-            displayText: response.body.balance,
+            speech: response,
+            displayText: response,
             source: 'msufcuchatbot'
         });
     }
