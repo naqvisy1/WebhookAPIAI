@@ -79,6 +79,10 @@ app.post('/echo', function(req, res) {
     {
          response = "Your balance is $90,000";
     }
+    else if(accountNumber === 1234)
+    {
+         response = "Your balance is $12,000";
+    }
     else
     {
          response = "Sorry, but that account does not exist at this time";
