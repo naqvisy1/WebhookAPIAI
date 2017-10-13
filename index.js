@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.post('/echo', function(req, res) {
     
     var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
-    var speech2 = "my account balance is";
+    var speech2 = "my account balance is 35000";
     var response = "";
     console.log("acc: " , accountNumber);
 
@@ -30,9 +30,11 @@ request.post(
             console.log(body)
         }
         console.log("yo");
+        
+        
         return res.json({
-            speech: response,
-            displayText: response,
+            speech: speech2,
+            displayText: speech2,
             source: 'msufcuchatbot'
         });
     }
