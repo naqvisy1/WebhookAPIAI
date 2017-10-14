@@ -17,8 +17,8 @@ app.use(bodyParser.json());
 app.post('/echo', function(req, res) {
     
     var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
-    var response1 = "";
-    var final;
+    var response = "";
+    var final = "";
 
 request.post(
     'https://api.msufcuchatbot.me/getBalance/',
