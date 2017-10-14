@@ -20,7 +20,7 @@ app.post('/echo', function(req, res) {
     var response = "";
 
 request.get(
-    'http://api.msufcuchatbot.me/test/',
+    'https://www.api.msufcuchatbot.me/test/',
     function (error, response) {
         if (!error && response.statusCode == 200) {
             return res.json({
