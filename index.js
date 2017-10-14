@@ -26,8 +26,8 @@ request.post(
     function (error, response) {
         if (!error && response.statusCode == 200) {
             return res.json({
-            speech: "Your account balance is " + response.balance,
-            displayText: "Your account balance is " + response.balance,
+            speech: "Your account balance is " + JSON.stringify(response.balance),
+            displayText: "Your account balance is " + JSON.stringify(response.balance),
             source: 'msufcuchatbot'
         });
         }
