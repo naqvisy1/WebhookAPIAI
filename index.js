@@ -59,32 +59,32 @@ request.get(
 //     });
 //     console.log("1", response);
 
-    if(accountNumber === 9999)
-    {
-         response = "Your balance is $35,000";
-    }
-    else if(accountNumber === 1111)
-    {
-         response = "Your balance is $5,000";
-    }
-    else if(accountNumber === 0)
-    {
-         response = "Your balance is $90,000";
-    }
-    else if(accountNumber === 1234)
-    {
-         response = "Your balance is $12,000";
-    }
-    else
-    {
-         response = "Sorry, but that account does not exist at this time";
-    }
-    var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
-    return res.json({
-        speech: response,
-        displayText: response,
-        source: 'msufcuchatbot'
-    });
+//     if(accountNumber === 9999)
+//     {
+//          response = "Your balance is $35,000";
+//     }
+//     else if(accountNumber === 1111)
+//     {
+//          response = "Your balance is $5,000";
+//     }
+//     else if(accountNumber === 0)
+//     {
+//          response = "Your balance is $90,000";
+//     }
+//     else if(accountNumber === 1234)
+//     {
+//          response = "Your balance is $12,000";
+//     }
+//     else
+//     {
+//          response = "Sorry, but that account does not exist at this time";
+//     }
+//     var speech = req.body.result && req.body.result.parameters && req.body.result.parameters.echoText ? req.body.result.parameters.echoText : "Seems like some problem. Speak again."
+//     return res.json({
+//         speech: response,
+//         displayText: response,
+//         source: 'msufcuchatbot'
+//     });
 });
 
 app.listen((process.env.PORT || 8000), function() {
