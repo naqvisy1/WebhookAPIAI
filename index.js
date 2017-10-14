@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.post('/echo', function(req, res) {
     
     var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
-    var response = "";
+    var response1 = "";
     var final = ""
 
 request.post(
@@ -26,8 +26,8 @@ request.post(
     function (error, response) {
         if (!error && response.statusCode == 200) {
             return res.json({
-            speech: "blah" + response.length,
-            displayText: "blah" + response.length,
+            speech: "blah" + response.length.toString(),
+            displayText: "blah" + response.length.toString(),
             source: 'msufcuchatbot'
         });
         }
