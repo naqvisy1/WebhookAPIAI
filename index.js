@@ -19,8 +19,8 @@ app.post('/echo', function(req, res) {
     var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
     var response = "";
 
-request.get(
-    'https://www.api.msufcuchatbot.me/test/',
+request.post(
+    'https://api.msufcuchatbot.me/test/',
     function (error, response) {
         if (!error && response.statusCode == 200) {
             return res.json({
