@@ -20,25 +20,29 @@ app.post('/echo', function(req, res) {
     var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
     var response = "";
     var final = ""
-    return res.json({
-            speech: "Your account balance is " + JSON.stringify(req.body.result.action),
-            displayText: "Your account balance is " + JSON.stringify(req.body.result.action),
-            source: 'msufcuchatbot'
-        });
+    if(req.body.result.action == "echo"){
+       request.post(
+            'https://api.msufcuchatbot.me/getBalance/',
+            { json: {"accountId": accountNumber, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+            function (error, response) {
+                if (!error && response.statusCode == 200) {
+                    return res.json({
+                        speech: "Your account balance is " + JSON.stringify(response.body.balance),
+                        displayText: "Your account balance is " + JSON.stringify(response.body.balance),
+                        source: 'msufcuchatbot'
+                    });
+                }
+            }
+        );
+    } else {
+        return res.json({
+                        speech: "Stuff"),
+                        displayText: "Stuff",
+                        source: 'msufcuchatbot'
+                    });
+    }
 
-// request.post(
-//     'https://api.msufcuchatbot.me/getBalance/',
-//     { json: {"accountId": accountNumber, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
-//     function (error, response) {
-//         if (!error && response.statusCode == 200) {
-//             return res.json({
-//                 speech: "Your account balance is " + JSON.stringify(response.body.balance),
-//                 displayText: "Your account balance is " + JSON.stringify(response.body.balance),
-//                 source: 'msufcuchatbot'
-//             });
-//         }
-//     }
-// );
+
 //     http.post("http://api.msufcuchatbot.me/getBalance/", {accountId: accountNumber, code: "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"}, (resp) => {
 //         return res.json({
 //             speech: speech2,
