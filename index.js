@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 
-app.post('/dialogflow', function(req, res) {
+app.post('/echo', function(req, res) {
     return res.json({
                         speech: JSON.stringify(response.body),
                         displayText: JSON.stringify(response.body),
