@@ -21,8 +21,8 @@ app.post('/echo', function(req, res) {
     var response = "";
     var final = ""
     return res.json({
-            speech: "Your account balance is " + JSON.stringify(req.body.result),
-            displayText: "Your account balance is " + JSON.stringify(req.body.result.contexts),
+            speech: "Your account balance is " + JSON.stringify(req.body.result.action),
+            displayText: "Your account balance is " + JSON.stringify(req.body.result.action),
             source: 'msufcuchatbot'
         });
 
