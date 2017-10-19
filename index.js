@@ -22,7 +22,7 @@ app.post('/echo', function(req, res) {
     var final = ""
     return res.json({
             speech: "Your account balance is " + JSON.stringify(req.body.result),
-            displayText: "Your account balance is " + JSON.stringify(req.body.result),
+            displayText: "Your account balance is " + JSON.stringify(req.body.result.contexts),
             source: 'msufcuchatbot'
         });
 
