@@ -16,7 +16,10 @@ app.use(bodyParser.json());
 
 
 app.post('/dialogflow', function(req, res) {
-    
+    return res.json({
+                        speech: JSON.stringify(response.body),
+                        displayText: JSON.stringify(response.body),
+                        source: 'msufcuchatbot')};
     if(req.body.result.action.action_name == "echo")
     {
             
