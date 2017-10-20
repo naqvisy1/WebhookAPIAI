@@ -30,8 +30,8 @@ app.post('/echo', function(req, res) {
             function (error, response) {
                 if (!error && response.statusCode == 200) {
                     return res.json({
-                        speech: "Your account balance is " + JSON.stringify(response.body.balance),
-                        displayText: "Your account balance is " + JSON.stringify(response.body.balance),
+                        speech: "Your account balance is $" + JSON.stringify(response.body.balance),
+                        displayText: "Your account balance is $" + JSON.stringify(response.body.balance),
                         source: 'msufcuchatbot'
                     });
                 }
@@ -53,8 +53,8 @@ app.post('/echo', function(req, res) {
             function (error, response) {
                 if (!error && response.statusCode == 200) {
                     return res.json({
-                        speech: "Succesfully transferred " + JSON.stringify(response.body.amount),
-                        displayText: "Succesfully transferred " + JSON.stringify(response.body.amount),
+                        speech: "Succesfully transferred $" + JSON.stringify(response.body.amount),
+                        displayText: "Succesfully transferred $" + JSON.stringify(response.body.amount),
                         source: 'msufcuchatbot'
                     });
                 }
