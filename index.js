@@ -40,8 +40,7 @@ app.post('/echo', function(req, res) {
     }
     else if(req.body.result.action == "debug"){
              return res.json({
-                speech: JSON.stringify(req.body),
-                displayText: JSON.stringify(req.body),
+                displayText: JSON.stringify(req.body.originalRequest),
                 source: 'msufcuchatbot'
             });
     } else {
