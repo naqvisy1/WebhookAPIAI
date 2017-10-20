@@ -23,8 +23,8 @@ app.post('/echo', function(req, res) {
     if(req.body.result.action == "echo"){
         var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
         return res.json({
-            speech: JSON.stringify(req),
-            displayText: JSON.stringify(req),
+            speech: JSON.stringify(req.body),
+            displayText: JSON.stringify(req.body),
             source: 'msufcuchatbot'
         });
 
