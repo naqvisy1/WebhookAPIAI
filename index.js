@@ -22,7 +22,7 @@ app.post('/echo', function(req, res) {
     var final = ""
     if(req.body.result.action == "echo"){
         var accountNumber = parseInt(req.body.result.parameters.bankAccountNumber);
-       
+
 
        request.post(
             'https://api.msufcuchatbot.me/getBalance/',
@@ -44,6 +44,31 @@ app.post('/echo', function(req, res) {
                 displayText: JSON.stringify(req.body.originalRequest),
                 source: 'msufcuchatbot'
             });
+    } else if (req.body.result.action == "UpdateInfo.UpdateInfo-custom") {
+      
+      //Update user account info intent
+      if (req.body.result.parameters) {
+        //Parameters for changing account info
+        var accountNumber = parseInt(req.body.result.parameters.originalValue);
+        var updateInfo = req.body.result.parameters.updateInfo;
+        var whatToUpdate = req.body.result.parameters.whatToUpdate;
+
+        // Post to node.js api for `updateInfo`
+        request.post(
+             'https://api.msufcuchatbot.me/updateInfo/',
+             { json: {"accountId": accountNumber,"updateInfo": updateInfo, "whatToUpdate": whatToUpdate , "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+             function (error, response) {
+                 if (!error && response.statusCode == 200) {
+                     return res.json({
+                         speech: "Succesfully updated!",
+                         displayText: "Succesfully updated!",
+                         source: 'msufcuchatbot'
+                     });
+                 }
+             }
+         );
+      }
+
     } else {
         var accountNumber1 = parseInt(req.body.result.parameters.bankAccountNumber1);
         var accountNumber2 = parseInt(req.body.result.parameters.bankAccountNumber2);
