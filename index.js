@@ -72,7 +72,7 @@ app.post('/echo', function(req, res) {
         var sourceAccountNumber = parseInt(req.body.result.parameters.sourceAccountNumber);
         var sourceBankAccountType = req.body.result.parameters.sourceBankAccountType;
         var destinationBankAccountType = req.body.result.parameters.destinationBankAccountType;
-        var amount = parseInt(req.body.result.parameters.amount);
+        var amount = parseInt(req.body.result.parameters.amount.amount);
         request.post(
             'https://api.msufcuchatbot.me/internalTransferMoney/',
             { json: {"sourceAccountNumber": sourceAccountNumber, "sourceBankAccountType": sourceBankAccountType, "destinationBankAccountType": destinationBankAccountType, "amount":amount, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
