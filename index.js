@@ -69,8 +69,8 @@ app.post('/echo', function(req, res) {
 
     } else if( req.body.result.action == "internal-transfer") {
         var sourceAccountNumber = parseInt(req.body.result.parameters.sourceAccountNumber);
-        var sourceBankAccountType = parseInt(req.body.result.parameters.sourceBankAccountType);
-        var destinationBankAccountType = parseInt(req.body.result.parameters.destinationBankAccountType);
+        var sourceBankAccountType = req.body.result.parameters.sourceBankAccountType;
+        var destinationBankAccountType = req.body.result.parameters.destinationBankAccountType;
         var amount = parseInt(req.body.result.parameters.amount);
         request.post(
             'https://api.msufcuchatbot.me/internalTransferMoney/',
