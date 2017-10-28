@@ -90,7 +90,7 @@ app.post('/echo', function(req, res) {
         );
     }
     else if(req.body.result.action == "autopay-setup"){
-      var accountNumber = parseInt(req.body.result.parameters.accountNumber);
+      var accountNumber = req.body.result.parameters.accountNumber;
       var autopayShare = req.body.result.parameters.autopayShare;
       var sourceShare = req.body.result.parameters.sourceShare;
       var autopayAmount = req.body.result.parameters.autopayAmount;
