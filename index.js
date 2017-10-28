@@ -116,6 +116,7 @@ app.post('/echo', function(req, res) {
           }
       )
     }
+  }
     else {
         var accountNumber1 = parseInt(req.body.result.parameters.sourceAccountNumber);
         var accountNumber2 = parseInt(req.body.result.parameters.destinationAccountNumber);
