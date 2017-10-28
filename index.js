@@ -94,12 +94,12 @@ app.post('/echo', function(req, res) {
       var autopayShare = req.body.result.parameters.autopayShare;
       var sourceShare = req.body.result.parameters.sourceShare;
       var autopayAmount = req.body.result.parameters.autopayAmount;
-      console.log("Is this thing on?");
 
       request.post('https://api.msufcuchatbot.me/autopaySetup/',
         {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
           "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
           function(error, response){
+            console.log("Is this thing on?");
             if (!error && response.statusCode == 200) {
               var ordinal = require('ordinal');
               return res.json({speech: "Okay, starting automatic payments. On the "
