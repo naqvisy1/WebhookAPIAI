@@ -113,10 +113,10 @@ app.post('/echo', function(req, res) {
                   + " from your " + JSON.stringify(response.body.sourceShare) + ". Is this correct?",
                 source: msufcuchatbot
               });
+            }
           }
-      )
+      );
     }
-  }
     else {
         var accountNumber1 = parseInt(req.body.result.parameters.sourceAccountNumber);
         var accountNumber2 = parseInt(req.body.result.parameters.destinationAccountNumber);
