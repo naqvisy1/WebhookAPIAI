@@ -94,6 +94,7 @@ app.post('/echo', function(req, res) {
       var autopayShare = req.body.result.parameters.autopayShare;
       var sourceShare = req.body.result.parameters.sourceShare;
       var autopayAmount = req.body.result.parameters.autopayAmount;
+      console.log("Is this thing on?");
 
       request.post('https://api.msufcuchatbot.me/autopaySetup/',
         {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
