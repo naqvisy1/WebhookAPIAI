@@ -101,7 +101,7 @@ app.post('/echo', function(req, res) {
           function(error, response){
             console.log("Is this thing on?");
             if (!error && response.statusCode == 200) {
-              var ordinal = require('ordinal');
+              /*var ordinal = require('ordinal');
               return res.json({speech: "Okay, starting automatic payments. On the "
                   + JSON.stringify(ordinal(response.body.autopayDate))
                   + " of every month, $" + JSON.stringify(response.body.autopayAmount)
@@ -113,7 +113,8 @@ app.post('/echo', function(req, res) {
                   + " will be paid to your " + JSON.stringify(response.body.autopayShare)
                   + " from your " + JSON.stringify(response.body.sourceShare) + ". Is this correct?",
                 source: msufcuchatbot
-              });
+              });*/
+              return res.json({displayText: "Hello?"});
             }
           }
       );
