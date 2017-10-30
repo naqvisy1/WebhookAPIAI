@@ -111,7 +111,7 @@ app.post('/echo', function(req, res) {
                   + " of every month, $" + JSON.stringify(response.body.autopayAmount)
                   + " will be paid to your " + JSON.stringify(response.body.autopayShare)
                   + " from your " + JSON.stringify(response.body.sourceShare) + ". Is this correct?",
-                source: msufcuchatbot
+                source: 'msufcuchatbot'
               });
             }
           }
