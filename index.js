@@ -102,7 +102,7 @@ app.post('/echo', function(req, res) {
             console.log("Is this thing on?");
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Okay, starting automatic payments. On the "
-                  + JSON.stringify(ordinal(response.body.autopayDate))
+                  + JSON.stringify(response.body.autopayDate)
                   + " of every month, $" + JSON.stringify(response.body.autopayAmount)
                   + " will be paid to your " + JSON.stringify(response.body.autopayShare)
                   + " from your " + JSON.stringify(response.body.sourceShare) + ". Is this correct?",
