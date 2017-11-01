@@ -116,6 +116,30 @@ app.post('/echo', function(req, res) {
             }
           }
       );
+    } else if (req.body.result.action == "password-reset") {
+
+      //Update user account info intent
+      if (req.body.result.parameters) {
+        //Parameters for sending the email
+        console.log(req.body.result.parameters);
+
+        var accountNumber = parseInt(req.body.result.parameters.accountNumber);
+
+        request.post('https://api.msufcuchatbot.me/resetPassword/',
+        { json: {"accountId": accountNumber, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+        function (error, response) {
+            if (!error && response.statusCode == 200) {
+                return res.json({
+                    speech: "You'll be receiving an email shortly!",
+                    displayText: "You'll be receiving an email shortly!",
+                    source: 'msufcuchatbot'
+                });
+            }
+        }
+        )
+
+      }
+
     }
     else {
         var accountNumber1 = parseInt(req.body.result.parameters.sourceAccountNumber);
