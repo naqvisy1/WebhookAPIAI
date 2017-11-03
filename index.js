@@ -74,7 +74,7 @@ app.post('/echo', function(req, res) {
         var sourceAccountNumber = parseInt(req.body.result.parameters.sourceAccountNumber);
         var sourceAccountType = req.body.result.parameters.sourceAccountType;
         var destinationAccountType = req.body.result.parameters.destinationAccountType;
-        var amount = parseInt(req.body.result.parameters.amount);
+        var amount = parseFloat(req.body.result.parameters.amount);
         request.post(
             'https://api.msufcuchatbot.me/internalTransferMoney/',
             { json: {"sourceAccountNumber": sourceAccountNumber, "sourceBankAccountType": sourceAccountType, "destinationBankAccountType": destinationAccountType, "amount":amount, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
@@ -102,15 +102,15 @@ app.post('/echo', function(req, res) {
             console.log("Is this thing on?");
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Okay, starting automatic payments. On the "
-                  + JSON.stringify(response.body.autopayDate)
-                  + " of every month, $" + JSON.stringify(response.body.autopayAmount)
-                  + " will be paid to your " + JSON.stringify(response.body.autopayShare)
-                  + " from your " + JSON.stringify(response.body.sourceShare) + ". Is this correct?",
+                  + response.body.autopayDate
+                  + " of every month, $" + response.body.autopayAmount
+                  + " will be paid to your " + response.body.autopayShare
+                  + " from your " + response.body.sourceShare + ". Is this correct?",
                 displayText: "Okay, starting automatic payments. On the "
-                  + JSON.stringify(response.body.autopayDate)
-                  + " of every month, $" + JSON.stringify(response.body.autopayAmount)
-                  + " will be paid to your " + JSON.stringify(response.body.autopayShare)
-                  + " from your " + JSON.stringify(response.body.sourceShare) + ". Is this correct?",
+                  + response.body.autopayDate + " of every month, $"
+                  + response.body.autopayAmount + " will be paid to your "
+                  + response.body.autopayShare + " from your "
+                  + response.body.sourceShare + ". Is this correct?",
                 source: 'msufcuchatbot'
               });
             }
@@ -141,11 +141,28 @@ app.post('/echo', function(req, res) {
       }
 
     }
+    else if(req.body.result.action == "autopay-setup-intent.autopay-setup-intent-yes"){
+      var accountNumber = req.body.result.parameters.accountNumber;
+      var autopayShare = req.body.result.parameters.autopayShare;
+      var sourceShare = req.body.result.parameters.sourceShare;
+      var autopayAmount = req.body.result.parameters.autopayAmount;
+      request.post('https://api.msufcuchatbot.me/autopaySetupYes/',
+        {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
+          "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
+          function(error, response){
+            if (!error && response.statusCode == 200) {
+              return res.json({speech: "Alright, your automatic payments have been set up. Thanks!",
+                displayText: "Alright, your automatic payments have been set up. Thanks!",
+                source: 'msufcuchatbot'
+              });
+            }
+          }
+      );
+    }
     else {
         var accountNumber1 = parseInt(req.body.result.parameters.sourceAccountNumber);
         var accountNumber2 = parseInt(req.body.result.parameters.destinationAccountNumber);
-        //Why are we using parseInt on the amount? What if the amount has a decimal value?
-        var amount = parseInt(req.body.result.parameters.amount);
+        var amount = parseFloat(req.body.result.parameters.amount);
         request.post(
             'https://api.msufcuchatbot.me/transferMoney/',
             { json: {"accountId1": accountNumber1, "accountId2": accountNumber2,
