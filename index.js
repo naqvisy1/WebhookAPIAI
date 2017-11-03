@@ -170,8 +170,8 @@ app.post('/echo', function(req, res) {
             function (error, response) {
                 if (!error && response.statusCode == 200) {
                   return res.json({
-                      speech: "Succesfully transferred $" + JSON.stringify(response.body.amount),
-                      displayText: "Succesfully transferred $" + JSON.stringify(response.body.amount),
+                      speech: "Successfully transferred $" + JSON.stringify(response.body.amount),
+                      displayText: "Successfully transferred $" + JSON.stringify(response.body.amount),
                       source: 'msufcuchatbot'
                   });
                 }
