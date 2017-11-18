@@ -54,7 +54,7 @@ else if(req.body.result.action == "logging-in-answer"){
             speech: "Sorry, that wasn't correct.",
             displayText: "Sorry, that wasn't correct.",
             source: 'msufcuchatbot',
-            contextOut: [{name: "logging-in", lifespan:1, parameters:{}}, {name: "logging-in-answer", lifespan:0, parameters{}}]
+            contextOut: [{name: "logging-in", lifespan:1, parameters:{}}, {name: "logging-in-answer", lifespan:0, parameters:{}}]
           });
         }
       }
