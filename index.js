@@ -17,15 +17,59 @@ app.use(bodyParser.json());
 
 app.post('/echo', function(req, res) {
 
-if(req.body.result.contexts.find(c => c.name === "loggedin")){
+if(req.body.result.action == "logging-in"){
+  var accountNumber = req.body.result.parameters.accountNumber;
+  request.post(
+      'https://api.msufcuchatbot.me/loggingIn',
+      {json: {"accountNumber": accountNumber}},
+      function (error, response){
+        if(!error && response.statusCode == 200){
+          return res.json({
+            speech: JSON.stringify(response.body.question),
+            displayText: JSON.stringify(response.body.question),
+            source: 'msufcuchatbot',
+            contextOut: [{name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId}}]
+          });
+        }
+      }
+  );
+}
+else if(req.body.result.action == "logging-in-answer"){
+  var answer = req.body.originalRequest.data.inputs.raw_inputs.query;
+  request.post(
+    'https://api.msufcuchatbot.me/loggingInAnswer',
+    {json: {"answer": answer, "accountNumber": accountNumber, "questionId": questionId}},
+    function(error, response){
+      if(!error && response.statusCode == 200){
+        if(response.body.correct = 1){
+          return res.json({
+            speech: "Thanks! You are now logged in.",
+            displayText: "Thanks! You are now logged in.",
+            source: 'msufcuchatbot',
+            contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
+          });
+        }
+        else{
+          return res.json({
+            speech: "Sorry, that wasn't correct.",
+            displayText: "Sorry, that wasn't correct.",
+            source: 'msufcuchatbot',
+            contextOut: [{name: "logging-in", lifespan:1, parameters:{}}, {name: "logging-in-answer", lifespan:0, parameters{}}]
+          });
+        }
+      }
+    }
+  );
+}
+else if(req.body.result.contexts.find(c => c.name === "logged-in")){
     var response = "";
-    var final = ""
+    var final = "";
     if(req.body.result.action == "echo"){
         var accountNumber = parseInt(req.body.result.parameters.sourceAccountNumber);
         var sourceBankAcctType = req.body.result.parameters.sourceBankAcctType;
        request.post(
             'https://api.msufcuchatbot.me/getBalance/',
-            { json: {"accountId": accountNumber, "sourceBankAcctType": sourceBankAcctType,  "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+            { json: {"accountId": accountNumber, "sourceBankAcctType": sourceBankAcctType,  "code": "2017"} },
             function (error, response) {
                 if (!error && response.statusCode == 200) {
                     return res.json({
@@ -55,7 +99,7 @@ if(req.body.result.contexts.find(c => c.name === "loggedin")){
         // Post to node.js api for `updateInfo`
         request.post(
              'https://api.msufcuchatbot.me/updateInfo/',
-             { json: {"accountId": accountNumber,"updateInfo": updateInfo, "whatToUpdate": whatToUpdate , "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+             { json: {"accountId": accountNumber,"updateInfo": updateInfo, "whatToUpdate": whatToUpdate , "code": "2017"} },
              function (error, response) {
                  if (!error && response.statusCode == 200) {
                      return res.json({
@@ -76,7 +120,7 @@ if(req.body.result.contexts.find(c => c.name === "loggedin")){
         var amount = parseFloat(req.body.result.parameters.amount);
         request.post(
             'https://api.msufcuchatbot.me/internalTransferMoney/',
-            { json: {"sourceAccountNumber": sourceAccountNumber, "sourceBankAccountType": sourceAccountType, "destinationBankAccountType": destinationAccountType, "amount":amount, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+            { json: {"sourceAccountNumber": sourceAccountNumber, "sourceBankAccountType": sourceAccountType, "destinationBankAccountType": destinationAccountType, "amount":amount, "code": "2017"} },
             function (error, response) {
                 if (!error && response.statusCode == 200) {
                     return res.json({
@@ -98,7 +142,7 @@ if(req.body.result.contexts.find(c => c.name === "loggedin")){
         var accountNumber = parseInt(req.body.result.parameters.accountNumber);
 
         request.post('https://api.msufcuchatbot.me/resetPassword/',
-        { json: {"accountId": accountNumber, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
+        { json: {"accountId": accountNumber, "code": "2017"} },
         function (error, response) {
             if (!error && response.statusCode == 200) {
                 return res.json({
@@ -319,9 +363,10 @@ if(req.body.result.contexts.find(c => c.name === "loggedin")){
 }
 else{
   return res.json({
-     speech: "Hey, it worked!",
-     displayText: "Hey, it worked!",
-     source: 'msufcuchatbot'
+    contextOut: [{name:"logging-in", lifespan:1, parameters:{}}],
+    speech: "To access that feature, you must first verify your identity. Let's do that now.",
+    displayText: "To access that feature, you must first verify your identity. Let's do that now.",
+    source: 'msufcuchatbot'
   });
 }
 });
