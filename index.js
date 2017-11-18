@@ -35,7 +35,7 @@ if(req.body.result.contexts.find(c => c.name === "logging-in")){
       }
   );
 }
-else if(req.body.result.contexts.find(c => c.name === "logging-in-answer"){
+else if(req.body.result.contexts.find(c => c.name === "logging-in-answer")){
   var answer = req.body.originalRequest.data.inputs.raw_inputs.query;
   request.post(
     'https://api.msufcuchatbot.me/loggingInAnswer',
