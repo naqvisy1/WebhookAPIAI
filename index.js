@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.post('/echo', function(req, res) {
 
-
+if(req.body.result.contexts.find(c => c.name === 'loggedIn')){
     var response = "";
     var final = ""
     if(req.body.result.action == "echo"){
@@ -45,7 +45,6 @@ app.post('/echo', function(req, res) {
             });
     }
     else if (req.body.result.action == "UpdateInfo.UpdateInfo-custom") {
-ww
       //Update user account info intent
       if (req.body.result.parameters) {
         //Parameters for changing account info
@@ -262,10 +261,10 @@ ww
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Alright, changing the due date for your "
                 + loanShare + " from the " + response.body.oldDate + " to the "
-                + newDate + ". Is this correct?",
+                + newDate ". Is this correct?",
                 displayText: "Alright, changing the due date for your "
                 + loanShare + " from the " + response.body.oldDate + " to the "
-                + newDate + ". Is this correct?",
+                + newDate ". Is this correct?",
                 source: 'msufcuchatbot'
               });
             }
@@ -289,23 +288,14 @@ ww
           }
       );
     }
-    else if (req.body.result.action == "external-transfer") {
-        var sourceAccountNumber = parseInt(req.body.result.parameters.sourceAccountNumber);
-        var sourceAccountType = req.body.result.parameters.sourceAccountType;
-        var destinationAccountNumber = parseInt(req.body.result.parameters.destinationAccountNumber);
+    else {
+        var accountNumber1 = parseInt(req.body.result.parameters.sourceAccountNumber);
+        var accountNumber2 = parseInt(req.body.result.parameters.destinationAccountNumber);
         var amount = parseFloat(req.body.result.parameters.amount);
-
         request.post(
-            'https://api.msufcuchatbot.me/externaltransferMoney/',
-            {
-              json: {
-                "sourceAccountType": sourceAccountType,
-                "sourceAccountNumber": sourceAccountNumber,
-                "destinationAccountNumber":destinationAccountNumber,
-                "amount":amount,
-                "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"
-              }
-            },
+            'https://api.msufcuchatbot.me/transferMoney/',
+            { json: {"accountId1": accountNumber1, "accountId2": accountNumber2,
+              "amount":amount, "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"} },
             function (error, response) {
                 if (!error && response.statusCode == 200) {
                   return res.json({
@@ -317,7 +307,12 @@ ww
             }
         );
     }
+}
+else{
+
+}
 });
+
 
 
 app.listen((process.env.PORT || 8000), function() {
