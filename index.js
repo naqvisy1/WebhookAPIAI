@@ -25,10 +25,11 @@ if(req.body.result.action == "logging-in"){
       function (error, response){
         if(!error && response.statusCode == 200){
           return res.json({
-            speech: JSON.stringify(response.body.question),
-            displayText: JSON.stringify(response.body.question),
+            speech: response.body.question,
+            displayText: response.body.question,
             source: 'msufcuchatbot',
-            contextOut: [{name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId}}]
+            contextOut: [{name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId}}],
+            followupEvent: {name: "login-answer-event", data:{}}
           });
         }
       }
