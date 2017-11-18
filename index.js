@@ -28,8 +28,7 @@ if(req.body.result.action == "logging-in"){
             speech: response.body.question,
             displayText: response.body.question,
             source: 'msufcuchatbot',
-            contextOut: [{name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId}}],
-            followupEvent: {name: "login-answer-event", data:{}}
+            contextOut: [{name:"logging-in-intent-followup", lifespan:2, parameters:{"questionId":response.body.questionId}}]
           });
         }
       }
