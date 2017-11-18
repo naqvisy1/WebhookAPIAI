@@ -363,10 +363,11 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
 }
 else{
   return res.json({
-    "followupEvent": {
-      "name": "login-event",
-      "data": {}
-    }
+    speech: "To access that feature, you must first verify your identity. Let's do that now.",
+    displayText: "To access that feature, you must first verify your identity. Let's do that now.",
+    source: 'msufcuchatbot',
+    contextOut: [{name:"logging-in", lifespan:1, parameters:{}}],
+    followupEvent: {name:"login-event",data:{}}
   });
 }
 });
