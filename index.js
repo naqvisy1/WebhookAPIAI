@@ -322,7 +322,7 @@ else{
 <<<<<<< HEAD
     speech: "To access that feature, you must first verify your identity. Let's do that now.",
     displayText: "To access that feature, you must first verify your identity. Let's do that now.",
-    source: 'msufcuchatbot'
+    source: 'msufcuchatbot',
   /*return res.json({
     speech: "To access that feature, you must first verify your identity. Let's do that now.",
     displayText: "To access that feature, you must first verify your identity. Let's do that now.",
