@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.post('/echo', function(req, res) {
 
-if(req.body.result.contexts.find(c => c.name === 'loggedIn')){
+if(req.body.result.contexts.find(c => c.name === "loggedin")){
     var response = "";
     var final = ""
     if(req.body.result.action == "echo"){
