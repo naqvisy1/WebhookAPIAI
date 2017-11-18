@@ -29,13 +29,13 @@ if(req.body.result.contexts.find(c => c.name === "logging-in")){
             displayText: response.body.question,
             source: 'msufcuchatbot',
             contextOut: [{name: "logging-in", lifespan:0, parameters:{}},
-              {name:"logging-in-intent-followup", lifespan:2, parameters:{"questionId":response.body.questionId}}]
+              {name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId}}]
           });
         }
       }
   );
 }
-else if(req.body.result.contexts.find(c => c.name === "logging-in-answer")){
+else if(req.body.result.contexts.find(c => c.name === "logging-in-intent-followup")){
   var answer = req.body.originalRequest.data.inputs.raw_inputs.query;
   request.post(
     'https://api.msufcuchatbot.me/loggingInAnswer',
