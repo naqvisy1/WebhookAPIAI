@@ -309,7 +309,11 @@ if(req.body.result.contexts.find(c => c.name === 'loggedIn')){
     }
 }
 else{
-
+  return res.json({
+     speech: "Hey, it worked!",
+     displayText: "Hey, it worked!",
+     source: 'msufcuchatbot'
+  });
 }
 });
 
