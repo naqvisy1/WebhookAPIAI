@@ -364,7 +364,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
 else{
   return res.json({
     "followupEvent": {
-      "name": "login-event"
+      "name": "login-event",
+      "data": {}
     }
   });
 }
