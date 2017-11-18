@@ -36,7 +36,7 @@ if(req.body.result.contexts.find(c => c.name === "logging-in")){
   );
 }
 else if(req.body.result.contexts.find(c => c.name === "logging-in-intent-followup")){
-  var answer = req.body.originalRequest.data.inputs.raw_inputs.query;
+  var answer = req.body.result.resolvedQuery;
   request.post(
     'https://api.msufcuchatbot.me/loggingInAnswer',
     {json: {"answer": answer, "accountNumber": accountNumber, "questionId": questionId}},
