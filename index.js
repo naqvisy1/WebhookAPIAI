@@ -29,7 +29,7 @@ if(req.body.result.contexts.find(c => c.name === "logging-in")){
             displayText: response.body.question,
             source: 'msufcuchatbot',
             contextOut: [{name: "logging-in", lifespan:0, parameters:{}},
-              {name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId}}]
+              {name:"logging-in-intent-followup", lifespan:1, parameters:{"questionId":response.body.questionId, "accountNumber": accountNumber}}]
           });
         }
       }
@@ -37,6 +37,8 @@ if(req.body.result.contexts.find(c => c.name === "logging-in")){
 }
 else if(req.body.result.contexts.find(c => c.name === "logging-in-intent-followup")){
   var answer = req.body.result.resolvedQuery;
+  var accountNumber = req.body.result.contexts.find(c => c.name === "logging-in-intent-followup").parameters.accountNumber;
+  var questionId = req.body.result.contexts.find(c => c.name === "logging-in-intent-followup").parameters.questionId;
   request.post(
     'https://api.msufcuchatbot.me/loggingInAnswer',
     {json: {"answer": answer, "accountNumber": accountNumber, "questionId": questionId}},
