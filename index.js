@@ -366,12 +366,8 @@ else{
     speech: "To access that feature, you must first verify your identity. Let's do that now.",
     displayText: "To access that feature, you must first verify your identity. Let's do that now.",
     source: 'msufcuchatbot',
-  /*return res.json({
-    speech: "To access that feature, you must first verify your identity. Let's do that now.",
-    displayText: "To access that feature, you must first verify your identity. Let's do that now.",
-    source: 'msufcuchatbot',
     contextOut: [{name:"logging-in", lifespan:1, parameters:{}}]
-  });*/
+  });
 }
 });
 
