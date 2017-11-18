@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.post('/echo', function(req, res) {
 
-if(req.body.result.contexts.find(c => c.name === "logging-in"){
+if(req.body.result.contexts.find(c => c.name === "logging-in")){
   var accountNumber = req.body.result.parameters.accountNumber;
   request.post(
       'https://api.msufcuchatbot.me/loggingIn',
