@@ -78,7 +78,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                     return res.json({
                         speech: "Your account balance is $" + JSON.stringify(response.body.balance),
                         displayText: "Your account balance is $" + JSON.stringify(response.body.balance),
-                        source: 'msufcuchatbot'
+                        source: 'msufcuchatbot',
+                        contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                     });
                 }
             }
@@ -108,7 +109,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                      return res.json({
                          speech: "Succesfully updated!",
                          displayText: "Succesfully updated!",
-                         source: 'msufcuchatbot'
+                         source: 'msufcuchatbot',
+                         contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                      });
                  }
              }
@@ -117,7 +119,7 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
 
     }
     else if( req.body.result.action == "internal-transfer") {
-        var sourceAccountNumber = parseInt(req.body.result.parameters.sourceAccountNumber);
+        var sourceAccountNumber = parseInt(req.body.result.parameters.accountNumber);
         var sourceAccountType = req.body.result.parameters.sourceAccountType;
         var destinationAccountType = req.body.result.parameters.destinationAccountType;
         var amount = parseFloat(req.body.result.parameters.amount);
@@ -129,7 +131,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                     return res.json({
                         speech: "Succesfully transferred $" + JSON.stringify(response.body.amount),
                         displayText: "Succesfully transferred $" + JSON.stringify(response.body.amount),
-                        source: 'msufcuchatbot'
+                        source: 'msufcuchatbot',
+                        contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                     });
                 }
             }
@@ -151,7 +154,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                 return res.json({
                     speech: "You'll be receiving an email shortly!",
                     displayText: "You'll be receiving an email shortly!",
-                    source: 'msufcuchatbot'
+                    source: 'msufcuchatbot',
+                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                 });
             }
         }
@@ -181,7 +185,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                   + response.body.autopayAmount + " will be paid to your "
                   + response.body.autopayShare + " from your "
                   + response.body.sourceShare + ". Is this correct?",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -199,7 +204,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Alright, your automatic payments have been set up. Thanks!",
                 displayText: "Alright, your automatic payments have been set up. Thanks!",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -216,7 +222,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                   + response.body.autopayShare + ". Is this correct?",
                 displayText: "Okay, canceling automatic payments for your "
                     + response.body.autopayShare + ". Is this correct?",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -234,7 +241,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Alright, your automatic payments have been canceled.",
                 displayText: "Alright, your automatic payments have been canceled.",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -256,7 +264,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                 displayText: "Okay, making a loan payment. $" + response.body.autopayAmount
                     + " will be paid to your " + response.body.autopayShare
                     + " from your " + response.body.sourceShare + ". Is this correct?",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -274,7 +283,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Alright, your loan payment has been applied. Thanks!",
                 displayText: "Alright, your loan payment has been applied. Thanks!",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -291,7 +301,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                 + loanShare + "is the " + response.body.dueDate + " of the month.",
                 displayText: "Your current due date for your " + loanShare
                 + "is the " + response.body.dueDate + " of the month.",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -312,7 +323,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                 displayText: "Alright, changing the due date for your "
                 + loanShare + " from the " + response.body.oldDate + " to the "
                 + newDate + ". Is this correct?",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -329,7 +341,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Alright, your due date has been changed.",
                 displayText: "Alright, your due date has been changed.",
-                source: 'msufcuchatbot'
+                source: 'msufcuchatbot',
+                contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
             }
           }
@@ -357,7 +370,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                   return res.json({
                       speech: "Successfully transferred $" + JSON.stringify(response.body.amount),
                       displayText: "Successfully transferred $" + JSON.stringify(response.body.amount),
-                      source: 'msufcuchatbot'
+                      source: 'msufcuchatbot',
+                      contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                   });
                 }
             }
