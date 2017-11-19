@@ -230,8 +230,8 @@ app.post( "/echo", function( req, res ) {
                   });
                 }else if(!error && response.statusCode == 250){
                   return res.json({
-                    speech: JSON.stringify(res.body.message),
-                    displayText: JSON.stringify(res.body.message),
+                    speech: JSON.stringify(response.body.message),
+                    displayText: JSON.stringify(response.body.message),
                     source: 'msufcuchatbot'
                   });
                 }
