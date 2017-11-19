@@ -35,7 +35,7 @@ if(req.body.result.action == "logging-in"){
       }
   );
 }
-else if(req.body.result.action == "logging-in-answer")){
+else if(req.body.result.action == "logging-in-answer"){
   var answer = req.body.result.resolvedQuery;
   var accountNumber = req.body.result.contexts.find(c => c.name === "logging-in-intent-followup").parameters.accountNumber;
   var questionId = req.body.result.contexts.find(c => c.name === "logging-in-intent-followup").parameters.questionId;
