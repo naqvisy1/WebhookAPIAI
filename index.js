@@ -213,7 +213,6 @@ app.post( "/echo", function( req, res ) {
             {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
               "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
               function(error, response){
-                console.log(JSON.stringify(response));
                 if (!error && response.statusCode == 200) {
                   return res.json({speech: "Okay, starting automatic payments. On the "
                       + response.body.autopayDate
@@ -230,8 +229,8 @@ app.post( "/echo", function( req, res ) {
                   });
                 }else if(!error && response.statusCode == 250){
                   return res.json({
-                    speech: JSON.stringify(response.body.message),
-                    displayText: JSON.stringify(response.body.message),
+                    speech: response.body.message,
+                    displayText: response.body.message,
                     source: 'msufcuchatbot'
                   });
                 }
