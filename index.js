@@ -383,8 +383,9 @@ app.post( "/echo", function( req, res ) {
           var accountNumber = req.body.result.parameters.accountNumber;
           var loanShare = req.body.result.parameters.loanShare;
           var newDate = req.body.result.parameters.newDate;
+
           request.post('https://api.msufcuchatbot.me/changeDueDateYes/',
-          {json: {"accountNumber": accountNumber, "loanShare": loanShare,
+            {json: {"accountNumber": accountNumber, "loanShare": loanShare,
             "newDate": newDate}},
               function(error, response){
                 if (!error && response.statusCode == 200) {
@@ -394,9 +395,9 @@ app.post( "/echo", function( req, res ) {
                     contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                   });
                 }
-
-            }
-          }
+              }
+          );
+        }
         else if( req.body.result.action == "external-transfer" ) {
             var sourceAccountNumber = parseInt( req.body.result.parameters.sourceAccountNumber );
             var sourceAccountType = req.body.result.parameters.sourceAccountType;
