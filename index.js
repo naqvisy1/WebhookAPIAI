@@ -231,7 +231,8 @@ app.post( "/echo", function( req, res ) {
                   return res.json({
                     speech: response.body.message,
                     displayText: response.body.message,
-                    source: 'msufcuchatbot'
+                    source: 'msufcuchatbot',
+                    contextOut: [{name: "autopay-setup-intent-followup", lifespan:0, parameters:{}}]
                   });
                 }
               }
