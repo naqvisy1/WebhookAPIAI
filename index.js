@@ -509,7 +509,6 @@ app.post( "/echo", function( req, res ) {
                 //dictionary[key] -> 'value'
             }
             
-
             request.post(
                 "https://api.msufcuchatbot.me/travelNotes/",
                 {
@@ -521,18 +520,16 @@ app.post( "/echo", function( req, res ) {
                     }
                 },
                 function( error, response ) {
-                    if( !error && response.statusCode === 200 ) {
-                        return res.json( {
-                            speech: JSON.stringify( response.body.message ),
-                            displayText: JSON.stringify( response.body.message ),
-                            source: "msufcuchatbot",
-                            contextOut: [ {
-                                name: "logged-in",
-                                lifespan: 5,
-                                parameters: { "accountNumber": accountNumber }
-                            } ]
-                        } );
-                    }
+                    return res.json( {
+                        speech: JSON.stringify( response.body.message ),
+                        displayText: JSON.stringify( response.body.message ),
+                        source: "msufcuchatbot",
+                        contextOut: [ {
+                            name: "logged-in",
+                            lifespan: 5,
+                            parameters: { "accountNumber": accountNumber }
+                        } ]
+                    } );
                 }
             );
         }
