@@ -37,6 +37,24 @@ app.post( "/echo", function( req, res ) {
                 }
             }
         );
+    } else if( req.body.result.action === "link-account" ) {
+        const unique_link_code = req.body.result.parameters.linkCode;
+        request.post(
+            "https://api.msufcuchatbot.me/linkAccount",
+            { json: { "unique_link_code": unique_link_code } },
+            function( error, response ) {
+                return res.json( {
+                    speech: response.body.message,
+                    displayText: response.body.message,
+                    source: "msufcuchatbot",
+                    contextOut: [ { name: "logging-in", lifespan: 0, parameters: {} },
+                        {
+                            name: "logging-in-intent-followup",
+                            lifespan: 1,
+                        } ]
+                } );
+            }
+        );
     }
     else if( req.body.result.action == "logging-in-answer" ) {
         var answer = req.body.result.resolvedQuery;
