@@ -202,6 +202,7 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
           "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
           function(error, response){
             if (!error && response.statusCode == 200) {
+              console.log("Successfully enabled autopay. Returning.");
               return res.json({speech: "Alright, your automatic payments have been set up. Thanks!",
                 displayText: "Alright, your automatic payments have been set up. Thanks!",
                 source: 'msufcuchatbot',
