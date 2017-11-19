@@ -246,7 +246,6 @@ app.post( "/echo", function( req, res ) {
             {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
               "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
               function(error, response){
-                console.log(response);
                 if (!error && response.statusCode == 200) {
                   console.log("Successfully enabled autopay. Returning.");
                   return res.json({speech: "Alright, your automatic payments have been set up. Thanks!",
