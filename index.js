@@ -190,8 +190,8 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
               });
             }else if(!error && response.statusCode == 250){
               return res.json({
-                speech: res.body.message,
-                displayText: res.body.message,
+                speech: JSON.stringify(res.body.message),
+                displayText: JSON.stringify(res.body.message),
                 source: 'msufcuchatbot'
               });
             }
