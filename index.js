@@ -188,6 +188,12 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
                 source: 'msufcuchatbot',
                 contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
               });
+            }else if(!error && response.statusCode == 250){
+              return res.json({
+                speech: res.body.message,
+                displayText: res.body.message,
+                source: 'msufcuchatbot'
+              });
             }
           }
       );
@@ -201,6 +207,7 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
         {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
           "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
           function(error, response){
+            console.log(response);
             if (!error && response.statusCode == 200) {
               console.log("Successfully enabled autopay. Returning.");
               return res.json({speech: "Alright, your automatic payments have been set up. Thanks!",
@@ -239,6 +246,7 @@ else if(req.body.result.contexts.find(c => c.name === "logged-in")){
         {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
           "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
           function(error, response){
+            console.log(response);
             if (!error && response.statusCode == 200) {
               return res.json({speech: "Alright, your automatic payments have been canceled.",
                 displayText: "Alright, your automatic payments have been canceled.",
