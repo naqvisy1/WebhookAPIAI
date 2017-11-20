@@ -365,7 +365,7 @@ app.post( "/echo", function( req, res ) {
               function(error, response){
                 if (!error && response.statusCode == 200) {
                   return res.json({speech: "Your current due date for your "
-                    + loanShare + "is the " + response.body.dueDate + " of the month.",
+                    + loanShare + "is the " + JSON.stringify(response.body.dueDate) + " of the month.",
                     displayText: "Your current due date for your " + loanShare.toLowerCase()
                     + " is the " + JSON.stringify(response.body.dueDate) + " of the month.",
                     source: 'msufcuchatbot',
