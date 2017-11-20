@@ -37,7 +37,8 @@ app.post( "/echo", function( req, res ) {
                 }
             }
         );
-    } else if( req.body.result.action === "link-account" ) {
+    }
+    else if( req.body.result.action === "link-account" ) {
         const unique_link_code = req.body.result.parameters.linkCode;
         request.post(
             "https://api.msufcuchatbot.me/linkAccount",
@@ -365,8 +366,8 @@ app.post( "/echo", function( req, res ) {
                 if (!error && response.statusCode == 200) {
                   return res.json({speech: "Your current due date for your "
                     + loanShare + "is the " + response.body.dueDate + " of the month.",
-                    displayText: "Your current due date for your " + loanShare
-                    + "is the " + response.body.dueDate + " of the month.",
+                    displayText: "Your current due date for your " + loanShare.toLowerCase()
+                    + " is the " + JSON.stringify(response.body.dueDate) + " of the month.",
                     source: 'msufcuchatbot',
                     contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                   });
