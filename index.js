@@ -324,13 +324,12 @@ app.post( "/echo", function( req, res ) {
             {json: {"accountNumber": accountNumber, "loanShare": loanShare,
               "sourceShare": sourceShare, "paymentAmount": paymentAmount}},
               function(error, response){
+                var message = "Okay, making a loan payment. $" + response.body.paymentAmount
+                    + " will be paid to your " + response.body.autopayShare
+                    + " from your " + response.body.sourceShare + ". Is this correct?";
                 if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Okay, making a loan payment. $" + response.body.paymentAmount
-                      + " will be paid to your " + response.body.autopayShare
-                      + " from your " + response.body.sourceShare + ". Is this correct?",
-                    displayText: "Okay, making a loan payment. $" + response.body.paymentAmount
-                        + " will be paid to your " + response.body.autopayShare
-                        + " from your " + response.body.sourceShare + ". Is this correct?",
+                  return res.json({speech: message,
+                    displayText: message,
                     source: 'msufcuchatbot',
                     contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                   });
