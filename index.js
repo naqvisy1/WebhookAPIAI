@@ -455,7 +455,7 @@ app.post( "/echo", function( req, res ) {
             const locations_travelled = req.body.result.parameters.locationsTravelled;
             let locations_string = "";
             for (let key in locations_travelled){
-                locations_string += dictionary[key];
+                locations_string += locations_travelled[key];
             }
 
             request.post(
