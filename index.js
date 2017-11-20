@@ -454,9 +454,10 @@ app.post( "/echo", function( req, res ) {
             const return_date = req.body.result.parameters.returnDate;
             const locations_travelled = req.body.result.parameters.locationsTravelled;
             let locations_string = "";
-            for (let key in locations_travelled){
-                locations_string += locations_travelled[key];
+            for(let key in locations_travelled[0]){
+                locations_string += locations_travelled[0][key] + ",";
             }
+            locations_string.substring(0, places.length - 1);
 
             request.post(
                 "https://api.msufcuchatbot.me/travelNotes/",
