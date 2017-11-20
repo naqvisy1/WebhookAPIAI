@@ -466,7 +466,7 @@ app.post( "/echo", function( req, res ) {
                         "accountId": sourceAccountNumber,
                         "leaveDate": leaving_date,
                         "returnDate": return_date,
-                        "locationsTravelled": locations_travelled,
+                        "locationsTravelled": locations_string,
                     }
                 },
                 function( error, response ) {
