@@ -363,11 +363,11 @@ app.post( "/echo", function( req, res ) {
           request.post('https://api.msufcuchatbot.me/getDueDate/',
             {json: {"accountNumber": accountNumber, "loanShare": loanShare}},
               function(error, response){
+                const message = "Your current due date for your " + loanShare.toLowerCase()
+                    + " is the " + JSON.stringify(response.body.dueDate) + " of the month.";
                 if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Your current due date for your "
-                    + loanShare + "is the " + JSON.stringify(response.body.dueDate) + " of the month.",
-                    displayText: "Your current due date for your " + loanShare.toLowerCase()
-                    + " is the " + JSON.stringify(response.body.dueDate) + " of the month.",
+                  return res.json({speech: message,
+                    displayText: message,
                     source: 'msufcuchatbot',
                     contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
                   });
