@@ -205,7 +205,7 @@ app.post( "/echo", function( req, res ) {
                 var accountNumber = parseInt( req.body.result.parameters.accountNumber );
 
                 request.post( "https://api.msufcuchatbot.me/resetPassword/",
-                    { json: { "accountId": accountNumber, "code": "2017" } },
+                    { json: { "accountNumber": accountNumber, "code": "2017" } },
                     function( error, response ) {
                         if( !error && response.statusCode == 200 ) {
                             return res.json( {
