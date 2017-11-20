@@ -457,7 +457,7 @@ app.post( "/echo", function( req, res ) {
             for(let key in locations_travelled[0]){
                 locations_string += locations_travelled[0][key] + ",";
             }
-            locations_string.substring(0, locations_travelled.length - 1);
+            locations_string.substring(0, locations_string.length - 1);
 
             request.post(
                 "https://api.msufcuchatbot.me/travelNotes/",
@@ -478,7 +478,7 @@ app.post( "/echo", function( req, res ) {
                             contextOut: [ {
                                 name: "logged-in",
                                 lifespan: 5,
-                                parameters: { "accountNumber": accountNumber, "locationsTravelled": locations_travelled }
+                                parameters: { "accountNumber": accountNumber }
                             } ]
                         } );
                     }
