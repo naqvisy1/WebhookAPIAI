@@ -452,12 +452,12 @@ app.post( "/echo", function( req, res ) {
             const sourceAccountNumber = req.body.result.parameters.accountNumber;
             const leaving_date = req.body.result.parameters.leavingDate;
             const return_date = req.body.result.parameters.returnDate;
-            const locations_travelled = req.body.result.parameters.locationsTravelled;
-            let locations_string = "";
-            for(let key in locations_travelled[0]){
-                locations_string += locations_travelled[0][key] + ",";
-            }
-            locations_string.substring(0, places.length - 1);
+            const locations_travelled = req.body.result.parameters.locationsTravelled.original;
+            // let locations_string = "";
+            // for(let key in locations_travelled[0]){
+            //     locations_string += locations_travelled[0][key] + ",";
+            // }
+            // locations_string.substring(0, places.length - 1);
 
             request.post(
                 "https://api.msufcuchatbot.me/travelNotes/",
@@ -466,7 +466,7 @@ app.post( "/echo", function( req, res ) {
                         "accountId": sourceAccountNumber,
                         "leaveDate": leaving_date,
                         "returnDate": return_date,
-                        "locationsTravelled": locations_string,
+                        "locationsTravelled": locations_travelled,
                     }
                 },
                 function( error, response ) {
