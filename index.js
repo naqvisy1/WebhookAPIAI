@@ -325,10 +325,10 @@ app.post( "/echo", function( req, res ) {
               "sourceShare": sourceShare, "paymentAmount": paymentAmount}},
               function(error, response){
                 if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Okay, making a loan payment. $" + response.body.autopayAmount
+                  return res.json({speech: "Okay, making a loan payment. $" + response.body.paymentAmount
                       + " will be paid to your " + response.body.autopayShare
                       + " from your " + response.body.sourceShare + ". Is this correct?",
-                    displayText: "Okay, making a loan payment. $" + response.body.autopayAmount
+                    displayText: "Okay, making a loan payment. $" + response.body.paymentAmount
                         + " will be paid to your " + response.body.autopayShare
                         + " from your " + response.body.sourceShare + ". Is this correct?",
                     source: 'msufcuchatbot',
