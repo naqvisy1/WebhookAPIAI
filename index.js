@@ -325,7 +325,7 @@ app.post( "/echo", function( req, res ) {
               "sourceShare": sourceShare, "paymentAmount": paymentAmount}},
               function(error, response){
                 var message = "Okay, making a loan payment. $" + response.body.paymentAmount
-                    + " will be paid to your " + response.body.autopayShare
+                    + " will be paid to your " + response.body.loanShare
                     + " from your " + response.body.sourceShare + ". Is this correct?";
                 if (!error && response.statusCode == 200) {
                   return res.json({speech: message,
