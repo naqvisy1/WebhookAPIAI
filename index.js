@@ -364,7 +364,7 @@ app.post( "/echo", function( req, res ) {
             {json: {"accountNumber": accountNumber, "loanShare": loanShare}},
               function(error, response){
                 const message = "Your current due date for your " + loanShare.toLowerCase()
-                    + " is the " + JSON.stringify(response.body.dueDate) + " of the month.";
+                    + " is the " + response.body.dueDate + " of the month.";
                 if (!error && response.statusCode == 200) {
                   return res.json({speech: message,
                     displayText: message,
