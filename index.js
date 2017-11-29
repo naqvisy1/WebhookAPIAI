@@ -24,8 +24,8 @@ app.post( "/echo", function( req, res ) {
             function( error, response ) {
                 if( !error && response.statusCode == 200 ) {
                     return res.json( {
-                        speech: response.body.question,
-                        displayText: response.body.question,
+                        speech: response.body.message,
+                        displayText: response.body.message,
                         source: "msufcuchatbot",
                         contextOut: [ { name: "logging-in", lifespan: 0, parameters: {} },
                             {
