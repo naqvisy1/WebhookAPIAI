@@ -1,3 +1,13 @@
+/**
+ * Team and Semester: MSUFCU Capstone Fall2017
+ * Project: API
+ * File name: stff
+ * Created by:  joshbenner on 11/29/17.
+ *
+ * Outside references:
+ *
+ * Purpose:
+ */
 "use strict";
 
 const express = require( "express" );
@@ -221,222 +231,33 @@ app.post( "/echo", function( req, res ) {
                         }
                     }
                 );
-              }
+            }
         }
-        else if(req.body.result.action == "autopay-setup"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var autopayShare = req.body.result.parameters.autopayShare;
-          var sourceShare = req.body.result.parameters.sourceShare;
-          var autopayAmount = req.body.result.parameters.autopayAmount;
-          request.post('https://api.msufcuchatbot.me/autopaySetup/',
-            {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
-              "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
-              function(error, response){
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Okay, starting automatic payments. On the "
-                      + response.body.autopayDate
-                      + " of every month, $" + response.body.autopayAmount
-                      + " will be paid to your " + response.body.autopayShare
-                      + " from your " + response.body.sourceShare + ". Is this correct?",
-                    displayText: "Okay, starting automatic payments. On the "
-                      + response.body.autopayDate + " of every month, $"
-                      + response.body.autopayAmount + " will be paid to your "
-                      + response.body.autopayShare + " from your "
-                      + response.body.sourceShare + ". Is this correct?",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }else if(!error && response.statusCode == 250){
-                  return res.json({
-                    speech: response.body.message,
-                    displayText: response.body.message,
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "autopay-setup-intent-followup", lifespan:0, parameters:{}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "autopay-setup-yes"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var autopayShare = req.body.result.parameters.autopayShare;
-          var sourceShare = req.body.result.parameters.sourceShare;
-          var autopayAmount = req.body.result.parameters.autopayAmount;
-          request.post('https://api.msufcuchatbot.me/autopaySetupYes/',
-            {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
-              "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
-              function(error, response){
-                if (!error && response.statusCode == 200) {
-                  console.log("Successfully enabled autopay. Returning.");
-                  return res.json({speech: "Alright, your automatic payments have been set up. Thanks!",
-                    displayText: "Alright, your automatic payments have been set up. Thanks!",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "autopay-cancel"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var autopayShare = req.body.result.parameters.autopayShare;
-          request.post('https://api.msufcuchatbot.me/autopayCancel/',
-            {json: {"accountNumber": accountNumber, "autopayShare": autopayShare}},
-              function(error, response){
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Okay, canceling automatic payments for your "
-                      + response.body.autopayShare + ". Is this correct?",
-                    displayText: "Okay, canceling automatic payments for your "
-                        + response.body.autopayShare + ". Is this correct?",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "autopay-cancel-yes"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var autopayShare = req.body.result.parameters.autopayShare;
-          var sourceShare = req.body.result.parameters.sourceShare;
-          var autopayAmount = req.body.result.parameters.autopayAmount;
-          request.post('https://api.msufcuchatbot.me/autopayCancelYes/',
-            {json: {"accountNumber": accountNumber, "autopayShare": autopayShare,
-              "sourceShare": sourceShare, "autopayAmount": autopayAmount}},
-              function(error, response){
-                console.log(response);
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Alright, your automatic payments have been canceled.",
-                    displayText: "Alright, your automatic payments have been canceled.",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "loan-payment"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var loanShare = req.body.result.parameters.loanShare;
-          var sourceShare = req.body.result.parameters.sourceShare;
-          var paymentAmount = req.body.result.parameters.paymentAmount;
-          request.post('https://api.msufcuchatbot.me/loanPayment/',
-            {json: {"accountNumber": accountNumber, "loanShare": loanShare,
-              "sourceShare": sourceShare, "paymentAmount": paymentAmount}},
-              function(error, response){
-                var message = "Okay, making a loan payment. $" + response.body.paymentAmount
-                    + " will be paid to your " + response.body.loanShare
-                    + " from your " + response.body.sourceShare + ". Is this correct?";
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: message,
-                    displayText: message,
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "loan-payment-yes"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var loanShare = req.body.result.parameters.loanShare;
-          var sourceShare = req.body.result.parameters.sourceShare;
-          var paymentAmount = req.body.result.parameters.paymentAmount;
-          request.post('https://api.msufcuchatbot.me/loanPaymentYes/',
-            {json: {"accountNumber": accountNumber, "loanShare": loanShare,
-              "sourceShare": sourceShare, "paymentAmount": paymentAmount}},
-              function(error, response){
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Alright, your loan payment has been applied. Thanks!",
-                    displayText: "Alright, your loan payment has been applied. Thanks!",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "get-due-date"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var loanShare = req.body.result.parameters.loanShare;
-          request.post('https://api.msufcuchatbot.me/getDueDate/',
-            {json: {"accountNumber": accountNumber, "loanShare": loanShare}},
-              function(error, response){
-                const message = "Your current due date for your " + loanShare.toLowerCase()
-                    + " is the " + response.body.dueDate + " of the month.";
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: message,
-                    displayText: message,
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "change-due-date"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var loanShare = req.body.result.parameters.loanShare;
-          var newDate = req.body.result.parameters.newDate;
-          request.post('https://api.msufcuchatbot.me/changeDueDate/',
-            {json: {"accountNumber": accountNumber, "loanShare": loanShare,
-              "newDate": newDate}},
-              function(error, response){
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Alright, changing the due date for your "
-                    + loanShare + " from the " + response.body.oldDate + " to the "
-                    + newDate + ". Is this correct?",
-                    displayText: "Alright, changing the due date for your "
-                    + loanShare + " from the " + response.body.oldDate + " to the "
-                    + newDate + ". Is this correct?",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if(req.body.result.action == "change-due-date-yes"){
-          var accountNumber = req.body.result.parameters.accountNumber;
-          var loanShare = req.body.result.parameters.loanShare;
-          var newDate = req.body.result.parameters.newDate;
-
-          request.post('https://api.msufcuchatbot.me/changeDueDateYes/',
-            {json: {"accountNumber": accountNumber, "loanShare": loanShare,
-            "newDate": newDate}},
-              function(error, response){
-                if (!error && response.statusCode == 200) {
-                  return res.json({speech: "Alright, your due date has been changed.",
-                    displayText: "Alright, your due date has been changed.",
-                    source: 'msufcuchatbot',
-                    contextOut: [{name: "logged-in", lifespan:5, parameters:{"accountNumber": accountNumber}}]
-                  });
-                }
-              }
-          );
-        }
-        else if( req.body.result.action == "external-transfer" ) {
-            var sourceAccountNumber = parseInt( req.body.result.parameters.sourceAccountNumber );
-            var sourceAccountType = req.body.result.parameters.sourceAccountType;
-            var destinationAccountNumber = parseInt( req.body.result.parameters.destinationAccountNumber );
-            var amount = parseFloat( req.body.result.parameters.amount );
-
-            request.post(
-                "https://api.msufcuchatbot.me/externaltransferMoney/",
+        else if( req.body.result.action == "autopay-setup" ) {
+            var accountNumber = req.body.result.parameters.accountNumber;
+            var autopayShare = req.body.result.parameters.autopayShare;
+            var sourceShare = req.body.result.parameters.sourceShare;
+            var autopayAmount = req.body.result.parameters.autopayAmount;
+            request.post( "https://api.msufcuchatbot.me/autopaySetup/",
                 {
                     json: {
-                        "sourceAccountType": sourceAccountType,
-                        "sourceAccountNumber": sourceAccountNumber,
-                        "destinationAccountNumber": destinationAccountNumber,
-                        "amount": amount,
-                        "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"
+                        "accountNumber": accountNumber, "autopayShare": autopayShare,
+                        "sourceShare": sourceShare, "autopayAmount": autopayAmount
                     }
                 },
                 function( error, response ) {
                     if( !error && response.statusCode == 200 ) {
                         return res.json( {
-                            speech: "Successfully transferred $" + JSON.stringify( response.body.amount ),
-                            displayText: "Successfully transferred $" + JSON.stringify( response.body.amount ),
+                            speech: "Okay, starting automatic payments. On the "
+                            + response.body.autopayDate
+                            + " of every month, $" + response.body.autopayAmount
+                            + " will be paid to your " + response.body.autopayShare
+                            + " from your " + response.body.sourceShare + ". Is this correct?",
+                            displayText: "Okay, starting automatic payments. On the "
+                            + response.body.autopayDate + " of every month, $"
+                            + response.body.autopayAmount + " will be paid to your "
+                            + response.body.autopayShare + " from your "
+                            + response.body.sourceShare + ". Is this correct?",
                             source: "msufcuchatbot",
                             contextOut: [ {
                                 name: "logged-in",
@@ -444,38 +265,35 @@ app.post( "/echo", function( req, res ) {
                                 parameters: { "accountNumber": accountNumber }
                             } ]
                         } );
+                    } else if( !error && response.statusCode == 250 ) {
+                        return res.json( {
+                            speech: response.body.message,
+                            displayText: response.body.message,
+                            source: "msufcuchatbot",
+                            contextOut: [ { name: "autopay-setup-intent-followup", lifespan: 0, parameters: {} } ]
+                        } );
                     }
                 }
             );
         }
-        else if( req.body.result.action === "travel-note" ) {
-            const sourceAccountNumber = req.body.result.parameters.accountNumber;
-            const leaving_date = req.body.result.parameters.leavingDate;
-            const return_date = req.body.result.parameters.returnDate;
-            const locations_travelled = req.body.result.parameters.locationsTravelled;
-            let locations_string = "";
-            for (let key in dictionary){
-                locations_string += dictionary[key];
-                //key will be -> 'id'
-                //dictionary[key] -> 'value'
-            }
-
-
-            request.post(
-                "https://api.msufcuchatbot.me/travelNotes/",
+        else if( req.body.result.action == "autopay-setup-yes" ) {
+            var accountNumber = req.body.result.parameters.accountNumber;
+            var autopayShare = req.body.result.parameters.autopayShare;
+            var sourceShare = req.body.result.parameters.sourceShare;
+            var autopayAmount = req.body.result.parameters.autopayAmount;
+            request.post( "https://api.msufcuchatbot.me/autopaySetupYes/",
                 {
                     json: {
-                        "accountId": sourceAccountNumber,
-                        "leaveDate": leaving_date,
-                        "returnDate": return_date,
-                        "locationsTravelled": locations_string,
+                        "accountNumber": accountNumber, "autopayShare": autopayShare,
+                        "sourceShare": sourceShare, "autopayAmount": autopayAmount
                     }
                 },
                 function( error, response ) {
-                    if( !error && response.statusCode === 200 ) {
+                    if( !error && response.statusCode == 200 ) {
+                        console.log( "Successfully enabled autopay. Returning." );
                         return res.json( {
-                            speech: JSON.stringify( response.body.message ),
-                            displayText: JSON.stringify( response.body.message ),
+                            speech: "Alright, your automatic payments have been set up. Thanks!",
+                            displayText: "Alright, your automatic payments have been set up. Thanks!",
                             source: "msufcuchatbot",
                             contextOut: [ {
                                 name: "logged-in",
@@ -487,17 +305,283 @@ app.post( "/echo", function( req, res ) {
                 }
             );
         }
+        else if( req.body.result.action == "autopay-cancel" ) {
+            var accountNumber = req.body.result.parameters.accountNumber;
+            var autopayShare = req.body.result.parameters.autopayShare;
+            request.post( "https://api.msufcuchatbot.me/autopayCancel/",
+                { json: { "accountNumber": accountNumber, "autopayShare": autopayShare } },
+                function( error, response ) {
+                    if( !error && response.statusCode == 200 ) {
+                        return res.json( {
+                            speech: "Okay, canceling automatic payments for your "
+                            + response.body.autopayShare + ". Is this correct?",
+                            displayText: "Okay, canceling automatic payments for your "
+                            + response.body.autopayShare + ". Is this correct?",
+                            source: "msufcuchatbot",
+                            contextOut: [ {
+                                name: "logged-in",
+                                lifespan: 5,
+                                parameters: { "accountNumber": accountNumber }
+                            } ]
+                        } );
+                    }
+                }
+            );
+        }
+        else if( req.body.result.action == "autopay-cancel-yes" ) {
+            var accountNumber = req.body.result.parameters.accountNumber;
+            var autopayShare = req.body.result.parameters.autopayShare;
+            var sourceShare = req.body.result.parameters.sourceShare;
+            var autopayAmount = req.body.result.parameters.autopayAmount;
+            request.post( "https://api.msufcuchatbot.me/autopayCancelYes/",
+                {
+                    json: {
+                        "accountNumber": accountNumber, "autopayShare": autopayShare,
+                        "sourceShare": sourceShare, "autopayAmount": autopayAmount
+                    }
+                },
+                function( error, response ) {
+                    console.log( response );
+                    if( !error && response.statusCode == 200 ) {
+                        return res.json( {
+                            speech: "Alright, your automatic payments have been canceled.",
+                            displayText: "Alright, your automatic payments have been canceled.",
+                            source: "msufcuchatbot",
+                            contextOut: [ {
+                                name: "logged-in",
+                                lifespan: 5,
+                                parameters: { "accountNumber": accountNumber }
+                            } ]
+                        } );
+                    }
+                }
+            );
+        }
+        else if( req.body.result.action == "loan-payment" ) {
+            var accountNumber = req.body.result.parameters.accountNumber;
+            var loanShare = req.body.result.parameters.loanShare;
+            var sourceShare = req.body.result.parameters.sourceShare;
+            var paymentAmount = req.body.result.parameters.paymentAmount;
+            request.post( "https://api.msufcuchatbot.me/loanPayment/",
+                {
+                    json: {
+                        "accountNumber": accountNumber, "loanShare": loanShare,
+                        "sourceShare": sourceShare, "paymentAmount": paymentAmount
+                    }
+                },
+                function( error, response ) {
+                    var message = "Okay, making a loan payment. $" + response.body.paymentAmount
+                        + " will be paid to your " + response.body.loanShare
+                        + " from your " + response.body.sourceShare + ". Is this correct?";
+                    if( !error && response.statusCode == 200 ) {
+                        return res.json( {
+                            speech: message,
+                            displayText: message,
+                            source: "msufcuchatbot",
+                            contextOut: [ {
+                                name: "logged-in",
+                                lifespan: 5,
+                                parameters: { "accountNumber": accountNumber }
+                            } ]
+                        } );
+                    }
+                });
+        }
+        else
+            if( req.body.result.action == "loan-payment-yes" ) {
+                var accountNumber = req.body.result.parameters.accountNumber;
+                var loanShare = req.body.result.parameters.loanShare;
+                var sourceShare = req.body.result.parameters.sourceShare;
+                var paymentAmount = req.body.result.parameters.paymentAmount;
+                request.post( "https://api.msufcuchatbot.me/loanPaymentYes/",
+                    {
+                        json: {
+                            "accountNumber": accountNumber, "loanShare": loanShare,
+                            "sourceShare": sourceShare, "paymentAmount": paymentAmount
+                        }
+                    },
+                    function( error, response ) {
+                        if( !error && response.statusCode == 200 ) {
+                            return res.json( {
+                                speech: "Alright, your loan payment has been applied. Thanks!",
+                                displayText: "Alright, your loan payment has been applied. Thanks!",
+                                source: "msufcuchatbot",
+                                contextOut: [ {
+                                    name: "logged-in",
+                                    lifespan: 5,
+                                    parameters: { "accountNumber": accountNumber }
+                                } ]
+                            } );
+                        }
+                    }
+                );
+            }
+            else if( req.body.result.action == "get-due-date" ) {
+
+                var accountNumber = req.body.result.parameters.accountNumber;
+                var loanShare = req.body.result.parameters.loanShare;
+                request.post( "https://api.msufcuchatbot.me/getDueDate/",
+                    { json: { "accountNumber": accountNumber, "loanShare": loanShare } },
+                    function( error, response ) {
+                        const message = "Your current due date for your " + loanShare.toLowerCase()
+                            + " is the " + response.body.dueDate + " of the month.";
+                        if( !error && response.statusCode == 200 ) {
+                            return res.json( {
+                                speech: message,
+                                displayText: message,
+                                source: "msufcuchatbot",
+                                contextOut: [ {
+                                    name: "logged-in",
+                                    lifespan: 5,
+                                    parameters: { "accountNumber": accountNumber }
+                                } ]
+                            } );
+                        }
+                    } );
+            }
+            else if( req.body.result.action == "change-due-date" ) {
+                var accountNumber = req.body.result.parameters.accountNumber;
+                var loanShare = req.body.result.parameters.loanShare;
+                var newDate = req.body.result.parameters.newDate;
+                request.post( "https://api.msufcuchatbot.me/changeDueDate/",
+                    {
+                        json: {
+                            "accountNumber": accountNumber, "loanShare": loanShare,
+                            "newDate": newDate
+                        }
+                    },
+                    function( error, response ) {
+                        if( !error && response.statusCode == 200 ) {
+                            return res.json( {
+                                speech: "Alright, changing the due date for your "
+                                + loanShare + " from the " + response.body.oldDate + " to the "
+                                + newDate + ". Is this correct?",
+                                displayText: "Alright, changing the due date for your "
+                                + loanShare + " from the " + response.body.oldDate + " to the "
+                                + newDate + ". Is this correct?",
+                                source: "msufcuchatbot",
+                                contextOut: [ {
+                                    name: "logged-in",
+                                    lifespan: 5,
+                                    parameters: { "accountNumber": accountNumber }
+                                } ]
+                            } );
+                        }
+                    }
+                );
+            }
+            else if( req.body.result.action == "change-due-date-yes" ) {
+                var accountNumber = req.body.result.parameters.accountNumber;
+                var loanShare = req.body.result.parameters.loanShare;
+                var newDate = req.body.result.parameters.newDate;
+
+                request.post( "https://api.msufcuchatbot.me/changeDueDateYes/",
+                    {
+                        json: {
+                            "accountNumber": accountNumber, "loanShare": loanShare,
+                            "newDate": newDate
+                        }
+                    },
+                    function( error, response ) {
+                        if( !error && response.statusCode == 200 ) {
+                            return res.json( {
+                                speech: "Alright, your due date has been changed.",
+                                displayText: "Alright, your due date has been changed.",
+                                source: "msufcuchatbot",
+                                contextOut: [ {
+                                    name: "logged-in",
+                                    lifespan: 5,
+                                    parameters: { "accountNumber": accountNumber }
+                                } ]
+                            } );
+                        }
+                    }
+                );
+            }
+            else if( req.body.result.action == "external-transfer" ) {
+                var sourceAccountNumber = parseInt( req.body.result.parameters.sourceAccountNumber );
+                var sourceAccountType = req.body.result.parameters.sourceAccountType;
+                var destinationAccountNumber = parseInt( req.body.result.parameters.destinationAccountNumber );
+                var amount = parseFloat( req.body.result.parameters.amount );
+
+                request.post(
+                    "https://api.msufcuchatbot.me/externaltransferMoney/",
+                    {
+                        json: {
+                            "sourceAccountType": sourceAccountType,
+                            "sourceAccountNumber": sourceAccountNumber,
+                            "destinationAccountNumber": destinationAccountNumber,
+                            "amount": amount,
+                            "code": "amzn1.ask.account.AGPEDC3Y57INSQR2Z7PPA6V7MV3GVNC6X2ZAEBXAIVP2SFA3VOZNLC537ML6Q5NEBPEQEEBT2AITE62N2OPW6YX37QZATHY7RHNGUDY5PHDADMAC5NBBBWSEFDCJR45VA3KOYDRDTGV5J743SAFSFUZFF7XM6Q3RNQTPMB5G24MFWYWBOSATFP7DIE7XG4BHCEUPKTP3ZRVIBFI"
+                        }
+                    },
+                    function( error, response ) {
+                        if( !error && response.statusCode == 200 ) {
+                            return res.json( {
+                                speech: "Successfully transferred $" + JSON.stringify( response.body.amount ),
+                                displayText: "Successfully transferred $" + JSON.stringify( response.body.amount ),
+                                source: "msufcuchatbot",
+                                contextOut: [ {
+                                    name: "logged-in",
+                                    lifespan: 5,
+                                    parameters: { "accountNumber": accountNumber }
+                                } ]
+                            } );
+                        }
+                    }
+                );
+            }
+            else if( req.body.result.action === "travel-note" ) {
+                const sourceAccountNumber = req.body.result.parameters.accountNumber;
+                const leaving_date = req.body.result.parameters.leavingDate;
+                const return_date = req.body.result.parameters.returnDate;
+                const locations_travelled = req.body.result.parameters.locationsTravelled;
+                let locations_string = "";
+                for ( var key in locations_travelled[ 0 ] ) {
+                    if( typeof locations_travelled[ 0 ][ key ] === "string" ) {
+                        locations_string += locations_travelled[ 0 ][ key ] + ",";
+                    }
+                }
+                locations_string.substring( 0, locations_string.length - 1 );
+
+                request.post(
+                    "https://api.msufcuchatbot.me/travelNotes/",
+                    {
+                        json: {
+                            "accountId": sourceAccountNumber,
+                            "leaveDate": leaving_date,
+                            "returnDate": return_date,
+                            "locationsTravelled": locations_string,
+                        }
+                    },
+                    function( error, response ) {
+                        if( !error && response.statusCode === 200 ) {
+                            return res.json( {
+                                speech: JSON.stringify( response.body.message ),
+                                displayText: JSON.stringify( response.body.message ),
+                                source: "msufcuchatbot",
+                                contextOut: [ {
+                                    name: "logged-in",
+                                    lifespan: 5,
+                                    parameters: { "accountNumber": accountNumber }
+                                } ]
+                            } );
+                        }
+                    }
+                );
+            }
+        }
+        else {
+            return res.json( {
+                speech: "To access that feature, you must first verify your identity. Let's do that now.",
+                displayText: "To access that feature, you must first verify your identity. Let's do that now.",
+                source: "msufcuchatbot",
+                contextOut: [ { name: "logging-in", lifespan: 1, parameters: {} } ],
+                followupEvent: { name: "login-event", data: {} }
+            } );
+        }
     }
-    else {
-        return res.json( {
-            speech: "To access that feature, you must first verify your identity. Let's do that now.",
-            displayText: "To access that feature, you must first verify your identity. Let's do that now.",
-            source: "msufcuchatbot",
-            contextOut: [ { name: "logging-in", lifespan: 1, parameters: {} } ],
-            followupEvent: { name: "login-event", data: {} }
-        } );
-    }
-} );
+    );
 
 app.listen( (process.env.PORT || 8000), function() {
     console.log( "Server up and listening" );
