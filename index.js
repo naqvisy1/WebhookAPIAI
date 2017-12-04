@@ -26,6 +26,12 @@ app.use( bodyParser.json() );
 
 
 app.post( "/echo", function( req, res ) {
+        if( req.body.result.action == "test" ) {
+                    return res.json( {
+                        speech: "testing",
+                        displayText: "testing",
+                    } );
+        }
         if( req.body.result.action == "logging-in" ) {
             var accountNumber = req.body.result.parameters.accountNumber;
             request.post(
